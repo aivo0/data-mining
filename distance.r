@@ -37,6 +37,16 @@ cosine.sim <- function(p) {
   return( sum(X*Y)/sqrt(sum(X^2)*sum(Y^2)) )
 }  
 
+covariance <- function(p) {
+  X = p[1,]
+  Y = p[2,]
+  # translate X so as to get the result to have a mean of 0
+  x.no.mean = X - (sum(X) / length(X))
+  y.no.mean = Y - (sum(Y) / length(Y))
+  x.no.mean * y.no.mean / (length(x) -1)
+}
+  
+
 x <- c(1,2,3,8)
 y <- c(2,3,4,1)
 p <- rbind(x, y)
