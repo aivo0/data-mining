@@ -37,15 +37,16 @@ cosine.sim <- function(p) {
   return( sum(X*Y)/sqrt(sum(X^2)*sum(Y^2)) )
 }  
 
+# https://en.wikipedia.org/wiki/Sample_mean_and_covariance
 covariance <- function(p) {
   X = p[1,]
   Y = p[2,]
-  # translate X so as to get the result to have a mean of 0
-  x.no.mean = X - (sum(X) / length(X))
-  y.no.mean = Y - (sum(Y) / length(Y))
-  x.no.mean * y.no.mean / (length(x) -1)
+  # substract from each element the mean of the vector
+  x.deviation = X - (sum(X) / length(X))
+  y.deviation = Y - (sum(Y) / length(Y))
+  sum(x.deviation * y.deviation) / (length(x) -1)
 }
-  
+
 
 x <- c(1,2,3,8)
 y <- c(2,3,4,1)
@@ -62,4 +63,7 @@ c <- cosine.sim(p)
 c.s <- lsa::cosine(p[1,], p[2,])
 can <- canberra.dist(p)
 can.p <- stats::dist(p, method="canberra")
-mah.p <-  stats::mahalanobis(x, center, cov, inverted = FALSE, ...)
+mah.p <-  stats::mahalanobis(x, center, cov, inverted = FALSE)
+cova <- covariance(p) 
+cova.p <- cov(p[1,], p[2,])
+
